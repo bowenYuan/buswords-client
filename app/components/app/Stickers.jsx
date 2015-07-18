@@ -1,5 +1,6 @@
 import { React, View, BackButton } from 'reapp-kit';
 import { Container, Block } from 'reapp-ui/components/Grid';
+import Conversation from '../Conversation'
 
 
 function stickerRequire(name) {
@@ -25,18 +26,32 @@ var Sticker = React.createClass({
 
 var StickerLink = React.createClass({
   render: function () {
-    var style = {
-      borderRadius: '256px',
-      width: '128px',
-      border: '2px solid #aaa'
+    var stickerPath = this.props.stickerPath,
+        conversation = Conversation.getCurrent();
+
+    function sendSticker () {
+      conversation.addMessage({
+        messageClass: 'Sticker',
+        messageData: {
+          stickerPath: stickerPath
+        }
+      });
     }
-    return <a href=""><Sticker style={style} stickerPath={this.props.stickerPath}></Sticker></a>
+
+    var style = {
+          borderRadius: '256px',
+          width: '128px',
+          border: '2px solid #aaa'
+        },
+        chatId = conversation.id.match(/-(\d+)$/)[1];
+    return <a href={'/chat#' + chatId} onClickCapture={() => sendSticker()} ><Sticker style={style} stickerPath={stickerPath}></Sticker></a>
   }
 });
 
 
 var StickerLinkContainer = React.createClass({
   render: function () {
+
     var containerProps = {
           pad: true,
           styles: {

@@ -3,7 +3,11 @@ import ButtonGroup from 'reapp-ui/components/ButtonGroup';
 import GitHubGravatarURL from '../Gravatar'
 import { Container, Block } from 'reapp-ui/components/Grid';
 import { Sticker } from './Stickers'
+import Conversation from '../Conversation'
 
+var myGitHubUserId = 2;
+
+localStorage.setItem('user', myGitHubUserId);
 
 var ChatRoom = React.createClass({
   render: function () {
@@ -34,7 +38,7 @@ var ChatMessage = React.createClass({
           borderRadius: '4px'
         };
 
-    return <container>
+    return <container key={this.props.key}>
             <Block style={style}>{children}</Block>
            </container>
   }
@@ -46,7 +50,58 @@ class Chat extends React.Component {
       <BackButton onTap={() => window.history.back()} />
 
     var GitHubUserId = (location.hash) ? +location.hash.substring(1) : 1,
-        AvatarURL = GitHubGravatarURL(GitHubUserId, 32);
+        AvatarURL = GitHubGravatarURL(GitHubUserId, 32),
+        conversationId = myGitHubUserId + '-' + GitHubUserId,
+        conversation = new Conversation({
+          id: conversationId
+        });
+
+    localStorage.setItem('conversation', conversation.id);
+
+    /*
+     * Initialize
+     */
+    if (!conversation.messages.length) {
+      conversation.addMessage({
+        messageClass: 'Sticker',
+        messageData: {
+          stickerPath: '25/0 1'
+        },
+        sender: myGitHubUserId,
+        receiver: GitHubUserId
+      })
+      conversation.addMessage({
+        messageClass: 'Trend',
+        messageData: {
+          value: '#Haikalis'
+        },
+        sender: myGitHubUserId,
+        receiver: GitHubUserId
+      })
+      conversation.addMessage({
+        messageClass: 'Sticker',
+        messageData: {
+          stickerPath: '15/3 1'
+        },
+        sender: GitHubUserId,
+        receiver: myGitHubUserId
+      })
+    }
+
+    var renderedMessages = conversation.messages.map(function (message) {
+      var messageContent,
+          messagePosition = (message.sender == myGitHubUserId) ? 'right' : 'left';
+
+      if (message.messageClass == 'Sticker') {
+        messageContent = <Sticker stickerPath={message.messageData.stickerPath}></Sticker>
+      } else if (message.messageClass == 'Trend') {
+        messageContent = message.messageData.value;
+      }
+
+      var chatMessage = <ChatMessage key={message.key} messagePosition={messagePosition}>{messageContent}</ChatMessage>
+
+      return chatMessage;
+    })
 
     function getTitle () {
       var style = {
@@ -60,15 +115,7 @@ class Chat extends React.Component {
       <NestedViewList {...this.props.viewListProps}>
         <View title={getTitle()} titleLeft={backButton} >
           <ChatRoom>
-            <ChatMessage messagePosition="left">
-              <Sticker stickerPath="25/0 1" ></Sticker>
-            </ChatMessage>
-              <ChatMessage messagePosition="left">
-                #Haikalis
-              </ChatMessage>
-            <ChatMessage messagePosition="right">
-              <Sticker stickerPath="15/3 1" ></Sticker>
-            </ChatMessage>
+            {renderedMessages}
           </ChatRoom>
           <ButtonGroup>
             <Button onTap={() => this.router().transitionTo('stickersView')} >Stickers</Button>
