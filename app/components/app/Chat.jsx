@@ -2,6 +2,7 @@ import { Reapp, React, NestedViewList, View, Button, BackButton } from 'reapp-ki
 import ButtonGroup from 'reapp-ui/components/ButtonGroup';
 import GitHubGravatarURL from '../Gravatar'
 import { Container, Block } from 'reapp-ui/components/Grid';
+import { Sticker } from './Stickers'
 
 
 var ChatRoom = React.createClass({
@@ -22,12 +23,14 @@ var ChatMessage = React.createClass({
         style = {
           maxWidth: '40%',
           float: this.props.messagePosition,
-          height: '32px',
+          minHeight: '32px',
+          minWidth: '32px',
+          padding: '4px',
           lineHeight: '32px',
           marginBottom: '8px',
           marginTop: '8px',
-          color: (this.props.messagePosition == 'left') ? '#fafafa' : '#111',
-          backgroundColor: (this.props.messagePosition == 'left') ? '#0084ff' : '#f1f0f0',
+          color: (this.props.messagePosition == 'left') ? '#111' : '#fafafa',
+          backgroundColor: (this.props.messagePosition == 'left') ? '#f1f0f0' : '#0084ff',
           borderRadius: '4px'
         };
 
@@ -58,14 +61,17 @@ class Chat extends React.Component {
         <View title={getTitle()} titleLeft={backButton} >
           <ChatRoom>
             <ChatMessage messagePosition="left">
-              😊
+              <Sticker stickerPath="25/0 1" ></Sticker>
             </ChatMessage>
+              <ChatMessage messagePosition="left">
+                #Haikalis
+              </ChatMessage>
             <ChatMessage messagePosition="right">
-              💩
+              <Sticker stickerPath="15/3 1" ></Sticker>
             </ChatMessage>
           </ChatRoom>
           <ButtonGroup>
-            <Button onTap={() => this.router().transitionTo('stickers')} >Stickers</Button>
+            <Button onTap={() => this.router().transitionTo('stickersView')} >Stickers</Button>
             <Button onTap={() => this.router().transitionTo('trends')} >Trends</Button>
           </ButtonGroup>
         </View>

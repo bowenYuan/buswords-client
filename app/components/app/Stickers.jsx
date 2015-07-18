@@ -1,141 +1,61 @@
 import { React, View, BackButton } from 'reapp-kit';
 import { Container, Block } from 'reapp-ui/components/Grid';
 
-export default class extends React.Component {
-render() {
-const backButton =
-  <BackButton onTap={() => window.history.back()} />
 
-  var containerProps = {
-    pad: true,
-    styles: {
-      self: {
-        textAlign: 'center',
-        marginTop: 0,
-        marginBottom: 0
-      }
-    }
-  };
+function stickerRequire(name) {
+  return 'http://localhost:3011/assets/shared/facebook-stickers/stickers/' + name + '.png';
+}
 
-  function stickerRequire(name) {
-    return 'http://localhost:3011/assets/shared/facebook-stickers/stickers/' + name + '.png';
+
+var Sticker = React.createClass({
+  render: function () {
+    var { width, pad, row, children, ...props } = this.props,
+        stickerURL = stickerRequire(this.props.stickerPath),
+        style = (this.props.style) ? this.props.style : {
+          borderRadius: '128px',
+          width: '64px',
+          border: '2px solid #aaa'
+        };
+
+    return  <Block>
+                <img style={style} src={stickerURL} alt="Sticker" />
+            </Block>
   }
+});
 
-return (
-  <View {...this.props} title="Choose a Sticker" titleLeft={backButton}>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('25/0 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/0 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/0 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/0 3')} alt="Sticker" />
-      </Block>
+var StickerLink = React.createClass({
+  render: function () {
+    var style = {
+      borderRadius: '256px',
+      width: '128px',
+      border: '2px solid #aaa'
+    }
+    return <a href=""><Sticker style={style} stickerPath={this.props.stickerPath}></Sticker></a>
+  }
+});
+
+
+var StickerLinkContainer = React.createClass({
+  render: function () {
+    var containerProps = {
+          pad: true,
+          styles: {
+            self: {
+              textAlign: 'center',
+              marginTop: '32px',
+              marginBottom: '32px'
+            }
+          }
+        },
+        containerId = this.props.containerId;
+
+    var container = <Container {...containerProps}>
+      {[0, 1, 2, 3].map(function (iteration) {
+        return <StickerLink stickerPath={containerId + " " + iteration} ></StickerLink>
+      })}
     </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('25/1 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/1 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/1 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/1 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('25/2 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/2 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/2 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/2 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('25/3 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/3 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/3 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('25/3 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('0/0 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/0 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/0 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/0 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('0/1 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/1 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/1 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/1 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('0/2 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/2 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/2 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/2 3')} alt="Sticker" />
-      </Block>
-    </Container>
-    <Container {...containerProps}>
-      <Block>
-        <img src={stickerRequire('0/3 0')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/3 1')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/3 2')} alt="Sticker" />
-      </Block>
-      <Block>
-        <img src={stickerRequire('0/3 3')} alt="Sticker" />
-      </Block>
-    </Container>
-  </View>
-);
-}
-}
+    return container
+  }
+});
+
+export {Sticker, StickerLink, StickerLinkContainer};

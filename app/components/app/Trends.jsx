@@ -10,8 +10,13 @@ export default class extends React.Component {
     return (
       <View {...this.props} title="Trends" titleLeft={backButton}>
         <List wrap>
-          {
-["#Haikalis","#Palmos Analysis","#Ελισαβετ","#Προεδρικο Μεγαρο","#χαικαλη","#fire","#ZaynAppreciationDay","#Σκυρο","#Αρκα","#καρεα"]}
+        {
+          [
+            "#Haikalis","#Palmos Analysis","#Ελισαβετ","#Προεδρικο Μεγαρο","#χαικαλη","#fire","#ZaynAppreciationDay","#Σκυρο","#Αρκα","#καρεα"
+          ].map(function (element) {
+            return <a href="#">{element}</a>
+          })
+        }
         </List>
       </View>
     );
