@@ -1,11 +1,7 @@
 import { Reapp, React, NestedViewList, View, Button } from 'reapp-kit';
 import ButtonGroup from 'reapp-ui/components/ButtonGroup';
 import { Container, Block } from 'reapp-ui/components/Grid';
-
-
-function getGravatarURL (GitHubUserId) {
-  return "https://avatars3.githubusercontent.com/u/" + GitHubUserId + "?v=3&s=128";
-}
+import GitHubGravatarURL from './Gravatar'
 
 var Avatar = React.createClass({
   render: function() {
@@ -16,7 +12,7 @@ var Avatar = React.createClass({
     };
 
     return <a href= {"/chat#" + this.props.GitHubUserId}  >
-             <img style={style} alt="Person avatar" src={getGravatarURL(this.props.GitHubUserId)} />
+             <img style={style} alt="Person avatar" src={GitHubGravatarURL(this.props.GitHubUserId, 128)} />
            </a>;
   }
 });

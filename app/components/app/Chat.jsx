@@ -1,11 +1,28 @@
 import { Reapp, React, NestedViewList, View, Button, BackButton } from 'reapp-kit';
 import ButtonGroup from 'reapp-ui/components/ButtonGroup';
+import GitHubGravatarURL from '../Gravatar'
+import { Container, Block } from 'reapp-ui/components/Grid';
 
 
-function getGravatarURL (GitHubUserId) {
-  return "https://avatars3.githubusercontent.com/u/" + GitHubUserId + "?v=3&s=32";
-}
+var ChatRoom = React.createClass({
+  render: function () {
+    var { width, pad, row, children, ...props } = this.props;
+    return <div>{children}</div>
+  }
+});
 
+var ChatMessage = React.createClass({
+  render: function () {
+    var { width, pad, row, children, ...props } = this.props;
+
+    var leftBlock = <Block></Block>,
+        rightBlock = <Block></Block>
+
+    return <container>
+            {leftBlock} {rightBlock}
+           </container>
+  }
+});
 
 class Chat extends React.Component {
   render() {
@@ -13,7 +30,7 @@ class Chat extends React.Component {
       <BackButton onTap={() => window.history.back()} />
 
     var GitHubUserId = (location.hash) ? +location.hash.substring(1) : 1,
-        AvatarURL = getGravatarURL(GitHubUserId);
+        AvatarURL = GitHubGravatarURL(GitHubUserId, 32);
 
     function getTitle () {
       var style = {
@@ -26,6 +43,14 @@ class Chat extends React.Component {
     return (
       <NestedViewList {...this.props.viewListProps}>
         <View title={getTitle()} titleLeft={backButton} >
+          <ChatRoom>
+            <ChatMessage messagePosition="left">
+              😊
+            </ChatMessage>
+            <ChatMessage messagePosition="right">
+              💩
+            </ChatMessage>
+          </ChatRoom>
           <ButtonGroup>
             <Button onTap={() => this.router().transitionTo('stickers')} >Stickers</Button>
             <Button onTap={() => this.router().transitionTo('trends')} >Trends</Button>
