@@ -6,20 +6,33 @@ import { Container, Block } from 'reapp-ui/components/Grid';
 
 var ChatRoom = React.createClass({
   render: function () {
-    var { width, pad, row, children, ...props } = this.props;
-    return <div>{children}</div>
+    var { width, pad, row, children, ...props } = this.props,
+        style = {
+          backgroundColor: 'white',
+          padding: '32px',
+          margin: '32px 0'
+        };
+    return <div style={style}>{children}</div>
   }
 });
 
 var ChatMessage = React.createClass({
   render: function () {
-    var { width, pad, row, children, ...props } = this.props;
-
-    var leftBlock = <Block></Block>,
-        rightBlock = <Block></Block>
+    var { width, pad, row, children, ...props } = this.props,
+        style = {
+          maxWidth: '40%',
+          float: this.props.messagePosition,
+          height: '32px',
+          lineHeight: '32px',
+          marginBottom: '8px',
+          marginTop: '8px',
+          color: (this.props.messagePosition == 'left') ? '#fafafa' : '#111',
+          backgroundColor: (this.props.messagePosition == 'left') ? '#0084ff' : '#f1f0f0',
+          borderRadius: '4px'
+        };
 
     return <container>
-            {leftBlock} {rightBlock}
+            <Block style={style}>{children}</Block>
            </container>
   }
 });
