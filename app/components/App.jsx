@@ -4,11 +4,15 @@ class Home extends React.Component {
   render() {
     return (
       <NestedViewList {...this.props.viewListProps}>
-        <View title="buswords-client">
+        <View title="Buswords ">
           <p>Hello, World!</p>
 
-          <Button onTap={() => this.router().transitionTo('sub')}>
-            Go to sub view
+          <Button onTap={() => this.router().transitionTo('stickers')}>
+            Send a sticker
+          </Button>
+
+          <Button onTap={() => this.router().transitionTo('trends')}>
+            Send a trend
           </Button>
         </View>
 
