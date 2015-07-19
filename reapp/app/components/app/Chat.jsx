@@ -75,6 +75,8 @@ class Chat extends React.Component {
         messageContent = <Sticker stickerPath={message.messageData.stickerPath}></Sticker>
       } else if (message.messageClass == 'Trend') {
         messageContent = message.messageData.value;
+      } else if (message.messageClass == 'TfaArticle') {
+        messageContent = message.messageData.title;
       } else if (message.messageClass == 'Article') {
         messageContent = <div style={{cursor: 'pointer'}} onClick={() => goToArticle(message.messageData.link)}>
                              <h4>{message.messageData.title}</h4>
@@ -110,6 +112,7 @@ class Chat extends React.Component {
             <Button onTap={() => this.router().transitionTo('stickersView')} >Stickers</Button>
             <Button onTap={() => this.router().transitionTo('trends')} >Trends</Button>
             <Button onTap={() => this.router().transitionTo('articles')} >Articles</Button>
+            <Button onTap={() => this.router().transitionTo('tfa')} >TfA News</Button>
           </ButtonGroup>
         </View>
 

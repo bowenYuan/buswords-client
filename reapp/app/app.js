@@ -8,6 +8,7 @@ router(require,
     route('articles'),
     route('article'),
     route('content'),
+    route('tfa'),
     route('chat')
   )
 );
