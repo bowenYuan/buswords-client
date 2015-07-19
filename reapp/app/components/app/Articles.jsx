@@ -38,7 +38,9 @@ export default class extends React.Component {
         messageData: {
           title: article.title,
           text: article.description,
-          html: article.html
+          html: article.html,
+          short: (article.description.length > 160) ? (article.description.substring(0, 160) + '...') : article.description,
+          link: article.link
         }
       }
 

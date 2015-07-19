@@ -63,6 +63,10 @@ class Chat extends React.Component {
 
     localStorage.setItem('conversation', conversation.id);
 
+    function goToArticle (link) {
+      window.location = '/article#' + link;
+    }
+
     var renderedMessages = conversation.messages.map(function (message) {
       var messageContent,
           messagePosition = (message.sender == myGitHubUserId) ? 'right' : 'left';
@@ -72,9 +76,9 @@ class Chat extends React.Component {
       } else if (message.messageClass == 'Trend') {
         messageContent = message.messageData.value;
       } else if (message.messageClass == 'Article') {
-        messageContent = <div>
+        messageContent = <div style={{cursor: 'pointer'}} onClick={() => goToArticle(message.messageData.link)}>
                              <h4>{message.messageData.title}</h4>
-                             <p>{message.messageData.text.substring(0, 160)}</p>
+                             <p>{message.messageData.short}</p>
                          </div>
       }
 

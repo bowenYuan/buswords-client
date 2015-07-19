@@ -6,6 +6,7 @@ router(require,
     route('stickersView'),
     route('trends'),
     route('articles'),
+    route('article'),
     route('chat')
   )
 );
