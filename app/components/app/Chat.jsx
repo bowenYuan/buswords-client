@@ -9,6 +9,10 @@ var myGitHubUserId = 2;
 
 localStorage.setItem('user', myGitHubUserId);
 
+function goToPeople() {
+  window.location = '/';
+}
+
 var ChatRoom = React.createClass({
   render: function () {
     var { width, pad, row, children, ...props } = this.props,
@@ -47,7 +51,7 @@ var ChatMessage = React.createClass({
 class Chat extends React.Component {
   render() {
     const backButton =
-      <BackButton onTap={() => window.history.back()} />
+      <BackButton onTap={() => goToPeople()} />
 
     var GitHubUserId = (location.hash) ? +location.hash.substring(1) : 1,
         AvatarURL = GitHubGravatarURL(GitHubUserId, 32),
