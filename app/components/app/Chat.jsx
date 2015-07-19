@@ -80,7 +80,8 @@ class Chat extends React.Component {
 
     function getTitle () {
       var style = {
-        borderRadius: '32px'
+        borderRadius: '32px',
+        width: '32px'
       };
 
       return <img src={AvatarURL} style={style}/>
