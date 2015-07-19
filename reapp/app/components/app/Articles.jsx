@@ -55,12 +55,19 @@ export default class extends React.Component {
 
     return (
       <View {...this.props} title="Articles" titleLeft={backButton}>
-        <List wrap>
-        {
-          articles.map(function (article) {
-            return <span style={style} onClickCapture={() => sendArticle(article)} >{article.title}</span>
-          })
-        }
+        <List>
+          {
+            articles.map(function (article, index) {
+              var listItemProps = {};
+              if (!(index % 3)) {
+                listItemProps.after = '🌟Sponsored';
+              }
+
+              return <List.Item {...listItemProps} >
+                       <span style={style} onClickCapture={() => sendArticle(article)} >{article.title}</span>
+                     </List.Item>
+            })
+          }
         </List>
       </View>
     );

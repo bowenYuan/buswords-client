@@ -25,10 +25,17 @@ export default class extends React.Component {
         }
         </List>
         <Title>Articles</Title>
-        <List wrap>
+        <List>
         {
-          articles.map(function (article) {
-            return <span style={{cursor: 'pointer'}} onClick={() => (window.location = '/article#' + article.link)}>{article.title}</span>
+          articles.map(function (article, index) {
+            var listItemProps = {};
+            if (!(index % 3)) {
+              listItemProps.after = '🌟Sponsored';
+            }
+
+            return <List.Item {...listItemProps} >
+                     <span style={{cursor: 'pointer'}} onClick={() => (window.location = '/article#' + article.link)}>{article.title}</span>
+                   </List.Item>
           })
         }
         </List>
