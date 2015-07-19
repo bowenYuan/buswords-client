@@ -5,6 +5,7 @@ router(require,
   route('app', '/',
     route('stickersView'),
     route('trends'),
+    route('articles'),
     route('chat')
   )
 );

@@ -71,6 +71,11 @@ class Chat extends React.Component {
         messageContent = <Sticker stickerPath={message.messageData.stickerPath}></Sticker>
       } else if (message.messageClass == 'Trend') {
         messageContent = message.messageData.value;
+      } else if (message.messageClass == 'Article') {
+        messageContent = <div>
+                             <h4>{message.messageData.title}</h4>
+                             <p>{message.messageData.text.substring(0, 160)}</p>
+                         </div>
       }
 
       var chatMessage = <ChatMessage key={message.key} messagePosition={messagePosition}>{messageContent}</ChatMessage>
@@ -100,6 +105,7 @@ class Chat extends React.Component {
           <ButtonGroup>
             <Button onTap={() => this.router().transitionTo('stickersView')} >Stickers</Button>
             <Button onTap={() => this.router().transitionTo('trends')} >Trends</Button>
+            <Button onTap={() => this.router().transitionTo('articles')} >Articles</Button>
           </ButtonGroup>
         </View>
 
