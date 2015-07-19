@@ -36,15 +36,19 @@ var StickerLink = React.createClass({
           stickerPath: stickerPath
         }
       });
+      window.history.back()
     }
 
     var style = {
           borderRadius: '256px',
           width: '128px',
-          border: '2px solid #aaa'
+          border: '2px solid #aaa',
+          cursor: 'pointer'
         },
         chatId = conversation.getChatId();
-    return <a href={'/chat#' + chatId} onClickCapture={() => sendSticker()} ><Sticker style={style} stickerPath={stickerPath}></Sticker></a>
+    return <span onClick={() => sendSticker()} >
+             <Sticker style={style} stickerPath={stickerPath}></Sticker>
+           </span>
   }
 });
 

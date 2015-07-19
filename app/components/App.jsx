@@ -3,17 +3,25 @@ import ButtonGroup from 'reapp-ui/components/ButtonGroup';
 import { Container, Block } from 'reapp-ui/components/Grid';
 import GitHubGravatarURL from './Gravatar'
 
+
+function goToChat (chatId) {
+  localStorage.setItem('chatId', chatId)
+  window.location = '/chat';
+}
+
+
 var Avatar = React.createClass({
   render: function() {
     var style = {
-      width: '128px',
-      height: '128px',
-      borderRadius: '128px'
-    };
+          width: '128px',
+          height: '128px',
+          borderRadius: '128px',
+          cursor: 'pointer'
+        };
 
-    return <a href= {"/chat#" + this.props.GitHubUserId}  >
-             <img style={style} alt="Person avatar" src={GitHubGravatarURL(this.props.GitHubUserId, 128)} />
-           </a>;
+    return <span>
+             <img style={style} alt={"Avatar of " + this.props.GitHubUserId} src={GitHubGravatarURL(this.props.GitHubUserId, 128)} />
+           </span>;
   }
 });
 
@@ -32,36 +40,31 @@ var containerProps = {
 
 class People extends React.Component {
   render() {
+    var router = this.router(),
+        users = [
+          ["788386", "6293460", "436509", "3789226"],
+          ["1188592", "3427236", "7421439", null]
+        ];
+
     return (
       <NestedViewList {...this.props.viewListProps}>
         <View title="Cool people near me">
-          <Container {...containerProps}>
-            <Block>
-              <Avatar GitHubUserId="788386" />
-            </Block>
-            <Block>
-              <Avatar GitHubUserId="6293460" />
-            </Block>
-            <Block>
-              <Avatar GitHubUserId="436509" />
-            </Block>
-            <Block>
-              <Avatar GitHubUserId="3789226" />
-            </Block>
-          </Container>
-          <Container {...containerProps}>
-            <Block>
-              <Avatar GitHubUserId="1188592" />
-            </Block>
-            <Block>
-              <Avatar GitHubUserId="3427236" />
-            </Block>
-            <Block>
-              <Avatar GitHubUserId="7421439" />
-            </Block>
-            <Block>
-            </Block>
-          </Container>
+          {
+            users.map(function (userRow, index) {
+              return <Container key={"userRow-" + index} {...containerProps}>
+                       {
+                         userRow.map(function (user, index) {
+                           if (!user) {
+                             return <Block></Block>
+                           }
+                           return <Block onClick={() => goToChat(user)} key={"userBlock" + user} >
+                                    <Avatar GitHubUserId={user}></Avatar>
+                                  </Block>
+                         })
+                       }
+                     </Container>
+            })
+          }
         </View>
 
         {this.props.child()}

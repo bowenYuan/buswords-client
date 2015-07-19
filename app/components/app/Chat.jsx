@@ -9,8 +9,8 @@ var myGitHubUserId = 2;
 
 localStorage.setItem('user', myGitHubUserId);
 
-function goToPeople() {
-  window.location = '/';
+function goToPeople(router) {
+  router.transitionTo('/');
 }
 
 var ChatRoom = React.createClass({
@@ -50,10 +50,11 @@ var ChatMessage = React.createClass({
 
 class Chat extends React.Component {
   render() {
+    var router = this.context.router;
     const backButton =
-      <BackButton onTap={() => goToPeople()} />
+      <BackButton onTap={() => goToPeople(router)} />
 
-    var GitHubUserId = (location.hash) ? +location.hash.substring(1) : 1,
+    var GitHubUserId = localStorage.getItem('chatId'),
         AvatarURL = GitHubGravatarURL(GitHubUserId, 32),
         conversationId = myGitHubUserId + '-' + GitHubUserId,
         conversation = new Conversation({
@@ -61,36 +62,6 @@ class Chat extends React.Component {
         });
 
     localStorage.setItem('conversation', conversation.id);
-
-    /*
-     * Initialize
-     */
-    if (!conversation.messages.length) {
-      conversation.addMessage({
-        messageClass: 'Sticker',
-        messageData: {
-          stickerPath: '25/0 1'
-        },
-        sender: myGitHubUserId,
-        receiver: GitHubUserId
-      })
-      conversation.addMessage({
-        messageClass: 'Trend',
-        messageData: {
-          value: '#Haikalis'
-        },
-        sender: myGitHubUserId,
-        receiver: GitHubUserId
-      })
-      conversation.addMessage({
-        messageClass: 'Sticker',
-        messageData: {
-          stickerPath: '15/3 1'
-        },
-        sender: GitHubUserId,
-        receiver: myGitHubUserId
-      })
-    }
 
     var renderedMessages = conversation.messages.map(function (message) {
       var messageContent,
@@ -115,11 +86,15 @@ class Chat extends React.Component {
       return <img src={AvatarURL} style={style}/>
     }
 
+    var placeholderStyle={
+          textAlign: 'center'
+        },
+        chatRoomContent = (renderedMessages.length) ? renderedMessages : <p style={placeholderStyle}>Share a <strong>Sticker</strong> or a <strong>Trend</strong>!</p>
     return (
       <NestedViewList {...this.props.viewListProps}>
         <View title={getTitle()} titleLeft={backButton} >
           <ChatRoom>
-            {renderedMessages}
+            {chatRoomContent}
           </ChatRoom>
           <ButtonGroup>
             <Button onTap={() => this.router().transitionTo('stickersView')} >Stickers</Button>
