@@ -44,11 +44,12 @@ class People extends React.Component {
         users = [
           ["788386", "6293460", "436509", "3789226"],
           ["1188592", "3427236", "7421439", null]
-        ];
+        ],
+        contentButton = <Button chromeless onTap={() => router.transitionTo('/content')}>Content</Button>;
 
     return (
       <NestedViewList {...this.props.viewListProps}>
-        <View title="Cool people near me">
+        <View title="Cool people near me" titleRight={contentButton} >
           {
             users.map(function (userRow, index) {
               return <Container key={"userRow-" + index} {...containerProps}>

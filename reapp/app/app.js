@@ -7,6 +7,7 @@ router(require,
     route('trends'),
     route('articles'),
     route('article'),
+    route('content'),
     route('chat')
   )
 );
