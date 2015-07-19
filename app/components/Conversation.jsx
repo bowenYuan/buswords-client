@@ -24,6 +24,10 @@ class Conversation {
     this._messages = JSON.stringify(this.messages);
     localStorage.setItem(this._messagesKey, this._messages);
   }
+
+  getChatId() {
+    return this.id.match(/-(\d+)$/)[1];
+  }
 }
 
 Conversation.getCurrent = function () {

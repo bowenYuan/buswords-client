@@ -43,7 +43,7 @@ var StickerLink = React.createClass({
           width: '128px',
           border: '2px solid #aaa'
         },
-        chatId = conversation.id.match(/-(\d+)$/)[1];
+        chatId = conversation.getChatId();
     return <a href={'/chat#' + chatId} onClickCapture={() => sendSticker()} ><Sticker style={style} stickerPath={stickerPath}></Sticker></a>
   }
 });
