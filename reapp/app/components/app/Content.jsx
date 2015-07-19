@@ -9,6 +9,9 @@ var trends = JSON.parse(
       localStorage.getItem('articles.articles')
     );
 
+trends = (trends) ? trends : [];
+articles = (articles) ? articles : [];
+
 export default class extends React.Component {
   render() {
     const backButton =

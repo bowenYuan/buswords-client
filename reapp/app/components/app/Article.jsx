@@ -8,20 +8,22 @@ export default class extends React.Component {
     const backButton =
       <BackButton onTap={() => window.history.back()} />
 
-    var article = (location.hash) ? location.hash.substring(1) : null,
-        title = (article) ? article : 'No article given',
-        iframeStyle = {
-          width: '100%',
-          height: '100%',
-          margin: 0,
-          padding: 0,
-          border: 0,
-          position: 'absolute'
-        };
+    var articles = JSON.parse(
+      localStorage.getItem('articles.articles')
+    );
+
+    articles = (articles) ? articles : [];
+
+    var articleLink = (location.hash) ? location.hash.substring(1) : null,
+        article = articles.filter(function (article) {
+          return (article.link == articleLink)
+        });
+
+    article = (article.length) ? article[0] : {text: 'No article', title: 'No article'}
 
     return (
-      <View {...this.props} title={title} titleLeft={backButton}>
-        <iframe style={iframeStyle} src={article}></iframe>
+      <View {...this.props} title={article.title} titleLeft={backButton}>
+        <div dangerouslySetInnerHTML={{__html: article.html}}></div>
       </View>
     );
   }
